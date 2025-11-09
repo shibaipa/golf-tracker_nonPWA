@@ -846,7 +846,9 @@ const allSummary = computeSegmentSummary(r, no => isPlayedHole(r.holes[no - 1]),
         const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
         const grossAuto = getGrossAuto(h, r);
         const gross = Number.isInteger(h.resultOverride)? h.resultOverride : grossAuto;
-        const mismatch = Number.isInteger(h.resultOverride) && h.resultOverride!==grossAuto;
+        // 🔧 mismatch判定を修正
+const expectedTotal = (h.strokesToSZ || 0) + (h.strokesFromSZ || 0) + (h.putts || 0);
+const mismatch = Number.isInteger(h.resultOverride) && h.resultOverride !== expectedTotal;
         const okTo=(h.strokesToSZ||0) <= targetTo;
         const okSZtoG=(h.strokesFromSZ||0) <= targetSZtoG;
         const okGtoHO=(h.putts||0) <= targetPutts;
