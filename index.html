@@ -5,19 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Golf Round Tracker</title>
 
-<!-- 必須: Web App Manifest -->
-<link rel="manifest" href="/golf-tracker_nonPWA/manifest.webmanifest">
-<!-- 任意だが推奨: テーマカラー（アドレスバー色など） -->
-<meta name="theme-color" content="#10b981">
+  <!-- （CodePenでは無視されてもOKなPWA関連） -->
+  <link rel="manifest" href="/golf-tracker_nonPWA/manifest.webmanifest">
+  <meta name="theme-color" content="#10b981">
+  <link rel="apple-touch-icon" href="/golf-tracker_nonPWA/icons/apple-touch-icon.png">
+  <link rel="icon" href="/golf-tracker_nonPWA/icons/icon-192.png" sizes="192x192">
+  <link rel="icon" href="/golf-tracker_nonPWA/icons/icon-512.png" sizes="512x512">
 
-<!-- iOS対策: ホーム画面アイコン -->
-<link rel="apple-touch-icon" href="/golf-tracker_nonPWA/icons/apple-touch-icon.png">
-
-<!-- Favicon（任意） -->
-<link rel="icon" href="/golf-tracker_nonPWA/icons/icon-192.png" sizes="192x192">
-<link rel="icon" href="/golf-tracker_nonPWA/icons/icon-512.png" sizes="512x512">
-
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html{font-family: ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji}
@@ -102,7 +96,6 @@
         <div class="text-right">
           <div class="text-xs text-gray-500">TOTAL</div>
           <div class="text-3xl font-extrabold" id="round-total">0</div>
-          <!-- 横並びの3メトリクス -->
           <div class="mt-1 grid grid-cols-3 gap-2 text-xs">
             <div>
               <div class="text-gray-500">vs Par</div>
@@ -123,7 +116,6 @@
       <div class="p-4 bg-white rounded-xl shadow">
         <div class="flex items-center justify-between">
           <div class="text-xl font-bold" id="hole-title">Hole 1 (Par 4)</div>
-          <!-- FIX: iPhoneでも常時表示（hidden md:block を削除） -->
           <div class="space-x-2">
             <button id="btn-prev-hole" class="px-3 py-2 bg-gray-200 rounded-lg">Prev</button>
             <button id="btn-next-hole" class="px-3 py-2 bg-gray-200 rounded-lg">Next</button>
@@ -164,7 +156,7 @@
           </div>
         </div>
 
-        <!-- 2. Scoring Zone -->
+        <!-- 2. Scoring Zone（To SZ / SZ to G / Putts） -->
         <div class="p-3 rounded-lg border">
           <div class="text-sm font-semibold mb-2">Scoring Zone</div>
           <!-- To SZ -->
@@ -180,23 +172,36 @@
               <button type="button" data-key="strokesToSZ" data-act="+" class="p-3 bg-yellow-100 rounded-r-md text-xl">+</button>
             </div>
           </div>
-          <!-- SZ to HO -->
-          <div>
+          <!-- SZ to G -->
+          <div class="mb-2">
             <div class="flex items-center justify-between border rounded-md">
               <button type="button" data-key="strokesFromSZ" data-act="-" class="p-3 bg-yellow-100 rounded-l-md text-xl">-</button>
               <div class="flex-1 text-center p-2">
-                <div class="text-xs text-gray-500">SZ to HO</div>
+                <div class="text-xs text-gray-500">SZ to G</div>
                 <div id="disp-from" class="text-2xl font-bold">0</div>
-                <div class="text-xs text-gray-500">(T=<span id="target-from">3</span>)</div>
+                <div class="text-xs text-gray-500">(T=<span id="target-from">0</span>)</div>
                 <div class="text-xs mt-1"><span id="ok-from" class="font-bold"></span></div>
               </div>
               <button type="button" data-key="strokesFromSZ" data-act="+" class="p-3 bg-yellow-100 rounded-r-md text-xl">+</button>
             </div>
           </div>
+          <!-- Putts (G to HO) -->
+          <div>
+            <div class="flex items-center justify-between border rounded-md">
+              <button type="button" data-key="putts" data-act="-" class="p-3 bg-yellow-100 rounded-l-md text-xl">-</button>
+              <div class="flex-1 text-center p-2">
+                <div class="text-xs text-gray-500">Putts</div>
+                <div id="disp-gtoho" class="text-2xl font-bold">0</div>
+                <div class="text-xs text-gray-500">(T=<span id="target-gtoho">2</span>)</div>
+                <div class="text-xs mt-1"><span id="ok-gtoho" class="font-bold"></span></div>
+              </div>
+              <button type="button" data-key="putts" data-act="+" class="p-3 bg-yellow-100 rounded-r-md text-xl">+</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Result (override) as +/- -->
+      <!-- Result (override) -->
       <div class="mt-4">
         <div class="p-3 rounded-lg border">
           <div class="text-sm font-semibold mb-2">Result</div>
@@ -212,28 +217,33 @@
             </div>
             <button type="button" data-key="resultOverride" data-act="+" class="p-3 bg-gray-100 rounded-r-md text-xl">+</button>
           </div>
-          <div class="text-xs text-gray-500 mt-1">If set, scorecard uses this value. Mismatch with (To SZ + SZ to HO) shows a warning.</div>
+          <div class="text-xs text-gray-500 mt-1">
+            If set, scorecard uses this value. Mismatch with (To SZ + SZ to G + Putts) shows a warning (for new rounds).
+          </div>
         </div>
       </div>
 
+      <!-- Other -->
       <div class="grid md:grid-cols-3 gap-4 mt-4">
-        <!-- 3. Putts -->
-        <div class="p-3 rounded-lg border">
-          <div class="text-sm font-semibold mb-2">Putts</div>
-          <div class="grid grid-cols-5 gap-2 text-center">
-            <button type="button" class="btn-toggle" data-putts="1">1</button>
-            <button type="button" class="btn-toggle" data-putts="2">2</button>
-            <button type="button" class="btn-toggle" data-putts="3">3</button>
-            <button type="button" class="btn-toggle" data-putts="4">4</button>
-            <button type="button" class="btn-toggle" data-putts="5">5</button>
-          </div>
-          <div class="text-xs mt-2">Target 2 putts: <span id="ok-putts" class="font-bold"></span></div>
-        </div>
-
-        <!-- 4. Other -->
-        <div class="p-3 rounded-lg border md:col-span-2">
+        <div class="p-3 rounded-lg border md:col-span-3">
           <div class="text-sm font-semibold mb-2">Other</div>
-          <div class="grid md:grid-cols-4 gap-3">
+          <div class="grid md:grid-cols-3 gap-3">
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">OB</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="ob" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="other-ob" class="text-xl font-bold">0</div>
+                <button type="button" data-key="ob" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Penalty</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="penalty" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="other-penalty" class="text-xl font-bold">0</div>
+                <button type="button" data-key="penalty" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Bunker</div>
               <div class="flex items-center justify-between">
@@ -288,13 +298,13 @@
             <tr>
               <th class="p-2 text-right">H</th>
               <th class="p-2 text-right">Par</th>
-              <th class="p-2 text-right">Target (±Par)</th>
+              <th class="p-2 text-right">Target</th>
               <th class="p-2 text-right">To SZ</th>
-              <th class="p-2 text-right">SZ to HO</th>
+              <th class="p-2 text-right">SZ to G</th>
               <th class="p-2 text-right">Putts</th>
               <th class="p-2 text-right">Gross</th>
               <th class="p-2 text-right">vs Target</th>
-              <th class="p-2 text-right">vs Par</th>
+              <th class="p-2 text-right">GIR / +1</th>
             </tr>
           </thead>
           <tbody id="sc-tbody" class="divide-y"></tbody>
@@ -316,8 +326,8 @@
       round:null, rounds:[],
       parSetup:Array(DEFAULT_HOLES).fill(4),
       startOrder:'OUT',
-      editingId:null, // null=new, string=edit
-      setupTargets: Array(DEFAULT_HOLES).fill('Bogey') // ★ 新規作成時のターゲット保持
+      editingId:null,
+      setupTargets: Array(DEFAULT_HOLES).fill('Bogey')
     };
 
     const playOrderFor=(start)=> start==='IN'
@@ -330,16 +340,24 @@
         holes.push({
           hole:i, par:parseInt(parArr[i-1]||4,10),
           teeClub:'1W', teeResult:'Stay Course', teeDirection:'Straight',
-          strokesToSZ:0, strokesFromSZ:0, putts:0,
+          strokesToSZ:0,    // Tee → SZ
+          strokesFromSZ:0,  // SZ → G
+          putts:0,          // G → HO（Putts）
           resultOverride:null,
           targetGoal: (targets && targets[i-1]) || 'Bogey',
+          ob:0, penalty:0,
           bunker:0,topped:0,heavyDuff:0,shank:0
         });
       }
       return {
-        roundId:id, date:date||new Date().toISOString().slice(0,10),
-        courseName:course||'New Course', createdAt:new Date().toISOString(),
-        holes, playStart:start||'OUT', playOrder:playOrderFor(start||'OUT')
+        roundId:id,
+        date:date||new Date().toISOString().slice(0,10),
+        courseName:course||'New Course',
+        createdAt:new Date().toISOString(),
+        holes,
+        playStart:start||'OUT',
+        playOrder:playOrderFor(start||'OUT'),
+        schemaVersion:'v2'
       };
     }
 
@@ -365,7 +383,8 @@
       state.roundId=id; state.round=jparse(raw,null);
       if(!state.round.playOrder) state.round.playOrder=playOrderFor(state.round.playStart||'OUT');
       state.holeIdx=1;
-      renderTracker(); switchView('tracker');
+      switchView('tracker');
+      renderTracker();
     }
 
     function editRound(id){
@@ -395,6 +414,44 @@
       document.getElementById(`view-${v}`).classList.remove('hidden');
     }
 
+    /* ========== Targets & Gross Logic ========== */
+    // Par / TargetScore によるターゲット表
+   function calcTargetsFor(h){
+  const adj = (h.targetGoal === 'Bogey' ? 1 : (h.targetGoal === 'DoubleBogey' ? 2 : 0));
+  const targetScore = h.par + adj;
+
+  let targetTo = 0;
+  let targetSZtoG = 0;
+  let targetPutts = 2; // 全ケース2固定
+
+  if (h.par === 3) {
+    if (targetScore === 3) { targetTo = 1; targetSZtoG = 0; }
+    else if (targetScore === 4) { targetTo = 1; targetSZtoG = 1; }
+    else if (targetScore === 5) { targetTo = 1; targetSZtoG = 2; }
+  } else if (h.par === 4) {
+    if (targetScore === 4) { targetTo = 2; targetSZtoG = 0; }
+    else if (targetScore === 5) { targetTo = 2; targetSZtoG = 1; }
+    else if (targetScore === 6) { targetTo = 2; targetSZtoG = 2; }
+  } else if (h.par === 5) {
+    if (targetScore === 5) { targetTo = 2; targetSZtoG = 1; }   // 修正①
+    else if (targetScore === 6) { targetTo = 3; targetSZtoG = 1; } // 修正②
+    else if (targetScore === 7) { targetTo = 3; targetSZtoG = 2; } // 修正③（同じ）
+  }
+
+  return { targetScore, targetTo, targetSZtoG, targetPutts };
+}
+
+    // v1: ToSZ + SZtoHO
+    // v2: ToSZ + SZtoG + Putts
+    function getGrossAuto(h, round){
+      const base = (h.strokesToSZ||0) + (h.strokesFromSZ||0);
+      const isV2 = round && round.schemaVersion === 'v2';
+      if(isV2){
+        return base + (h.putts||0);
+      }
+      return base;
+    }
+
     /* ========== Overview ========== */
     function renderOverview(){
       const list=document.getElementById('rounds-list');
@@ -409,12 +466,11 @@
         });
         const total=played.reduce((s,n)=>{
           const h=r.holes[n-1];
-          const auto=(h.strokesToSZ||0)+(h.strokesFromSZ||0);
+          const auto = getGrossAuto(h, r);
           const gross = Number.isInteger(h.resultOverride)? h.resultOverride : auto;
           return s + gross;
         },0);
         const par=played.reduce((s,n)=> s+r.holes[n-1].par,0);
-        const vs=total-par;
         return `
           <div class="p-4 bg-white rounded-xl shadow flex items-center justify-between">
             <div>
@@ -425,7 +481,7 @@
               <div class="text-xs text-gray-500">TOTAL</div>
               <div class="text-xl font-bold">${total}</div>
               <div class="text-xs text-gray-500">vs Par</div>
-              <div class="font-semibold">${pm(vs)}</div>
+              <div class="font-semibold">${pm(total-par)}</div>
               <div class="mt-2 flex gap-2 justify-end">
                 <button data-open="${r.roundId}" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">Open</button>
                 <button data-edit="${r.roundId}" class="px-3 py-1.5 border rounded-lg hover:bg-gray-50">Edit</button>
@@ -488,7 +544,6 @@
       }
       grid.innerHTML=html;
 
-      // Target total = Σ(par + adj) where adj: Par=0, Bogey=+1, D.Bogey=+2
       const targetTotal = state.parSetup.reduce((s,p,idx)=>{
         const t = state.setupTargets[idx] || 'Bogey';
         const adj = (t==='Par'?0:(t==='Bogey'?1:2));
@@ -507,12 +562,10 @@
       }));
       grid.querySelectorAll('[data-target]').forEach(b=> b.addEventListener('click', ()=>{
         const i=parseInt(b.dataset.hole,10)-1;
-        state.setupTargets[i] = b.dataset.target;         // ★ ここで保持
-        // 見た目のトグル
+        state.setupTargets[i] = b.dataset.target;
         const group=b.parentElement.querySelectorAll('[data-target]');
         group.forEach(x=>x.classList.remove('on'));
         b.classList.add('on');
-        // 即時再計算して表示更新
         renderSetup();
       }));
     }
@@ -542,24 +595,12 @@
     /* ========== Tracker Helpers ========== */
     const curHole = ()=> state.round.holes[state.round.playOrder[state.holeIdx-1]-1];
 
-    // 画像表のロジック:
-    // - targetScore = par + adj(Par=0,Bogey=+1,DBogey=+2)
-    // - targetFrom = (par===3 && targetScore===3) ? 2 : 3
-    // - targetTo   = max(0, targetScore - targetFrom)
-    function calcTargetsFor(h){
-      const adj = (h.targetGoal==='Bogey'?1:(h.targetGoal==='DoubleBogey'?2:0));
-      const targetScore = h.par + adj;
-      const targetFrom  = (h.par===3 && targetScore===3) ? 2 : 3;
-      const targetTo    = Math.max(0, targetScore - targetFrom);
-      return {targetScore, targetFrom, targetTo};
-    }
-
     /* ========== Tracker ========== */
     function renderTracker(){
       const r=state.round; if(!r) return; const h=curHole();
       const holeNo=r.playOrder[state.holeIdx-1];
 
-      const {targetScore, targetFrom, targetTo} = calcTargetsFor(h);
+      const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
 
       const played=r.playOrder.filter(n=>{
         const x=r.holes[n-1];
@@ -568,7 +609,7 @@
 
       const total=played.reduce((s,n)=>{
         const x=r.holes[n-1];
-        const auto=(x.strokesToSZ||0)+(x.strokesFromSZ||0);
+        const auto = getGrossAuto(x, r);
         const gross = Number.isInteger(x.resultOverride)? x.resultOverride : auto;
         return s+gross;
       },0);
@@ -608,15 +649,21 @@
         if(on){ l.classList.add('bg-indigo-500','text-white','border-indigo-500'); }
       });
 
+      // To SZ / SZ to G / Putts
       document.getElementById('disp-to').textContent = h.strokesToSZ||0;
       document.getElementById('disp-from').textContent = h.strokesFromSZ||0;
+      document.getElementById('disp-gtoho').textContent = h.putts||0;
+
       document.getElementById('target-to').textContent = targetTo;
-      document.getElementById('target-from').textContent = targetFrom;
+      document.getElementById('target-from').textContent = targetSZtoG;
+      document.getElementById('target-gtoho').textContent = targetPutts;
+
       document.getElementById('ok-to').textContent = (h.strokesToSZ||0) <= targetTo ? '✅' : '❌';
-      document.getElementById('ok-from').textContent = (h.strokesFromSZ||0) <= targetFrom ? '✅' : '❌';
+      document.getElementById('ok-from').textContent = (h.strokesFromSZ||0) <= targetSZtoG ? '✅' : '❌';
+      document.getElementById('ok-gtoho').textContent = (h.putts||0) <= targetPutts ? '✅' : '❌';
 
       // Result override with label & warning
-      const grossAuto = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
+      const grossAuto = getGrossAuto(h, r);
       const warnEl = document.getElementById('result-warning');
       const dispRes = document.getElementById('disp-result');
       const dispResLabel = document.getElementById('disp-result-label');
@@ -637,16 +684,15 @@
         if(dispResLabel) dispResLabel.textContent = '';
       }
       if(Number.isInteger(h.resultOverride) && h.resultOverride!==grossAuto){
-        warnEl.textContent = `⚠️ Mismatch: ToSZ+SZ to HO = ${grossAuto}, Result = ${h.resultOverride}`;
+        warnEl.textContent = `⚠️ Mismatch: To SZ + SZ to G + Putts (or old schema) = ${grossAuto}, Result = ${h.resultOverride}`;
         warnEl.className = 'text-sm text-red-600 font-semibold';
       } else {
         warnEl.textContent = '';
         warnEl.className = 'text-sm text-green-600';
       }
 
-      document.querySelectorAll('[data-putts]').forEach(b=> b.classList.toggle('on', parseInt(b.dataset.putts,10)===(h.putts||0)));
-      document.getElementById('ok-putts').textContent = (h.putts||0) <= 2 ? '✅' : '❌';
-
+      document.getElementById('other-ob').textContent=h.ob||0;
+      document.getElementById('other-penalty').textContent=h.penalty||0;
       document.getElementById('other-bunker').textContent=h.bunker||0;
       document.getElementById('other-topped').textContent=h.topped||0;
       document.getElementById('other-heavyDuff').textContent=h.heavyDuff||0;
@@ -660,82 +706,188 @@
 
     function updateHole(key, val){ const h=curHole(); h[key]=val; save(); renderTracker(); }
 
-    // 「最初の＋」でターゲット値を設定するインクリメント
-    function inc(key, delta){
-      const h = curHole();
-      const {targetScore, targetFrom, targetTo} = calcTargetsFor(h);
+    // 「最初の＋」でターゲット値を入れるインクリメント
+   function inc(key, delta){
+  const h = curHole();
+  const r = state.round;
+  const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
 
-      const base = (h[key]==null ? 0 : h[key]);
-      let v;
-      if (delta > 0 && (h[key]==null || h[key]===0)) {
-        if (key === 'resultOverride')      v = targetScore;
-        else if (key === 'strokesToSZ')    v = targetTo;
-        else if (key === 'strokesFromSZ')  v = targetFrom;
-        else                               v = 1;
-      } else {
-        v = Math.max(0, (base||0) + delta);
-      }
-      h[key] = v;
-      save(); renderTracker();
+  const base = (h[key]==null ? 0 : h[key]);
+  let v;
+  if (delta > 0 && (h[key]==null || h[key]===0)) {
+    if (key === 'resultOverride') {
+      v = targetScore;
+    } else if (key === 'strokesToSZ') {
+      v = targetTo;
+    } else if (key === 'strokesFromSZ') {
+      // 👇 修正点：ターゲットが0の時は1を初期値にする
+      v = (targetSZtoG === 0 ? 1 : targetSZtoG);
+    } else if (key === 'putts') {
+      v = targetPutts;
+    } else {
+      v = 1;
     }
+  } else {
+    v = Math.max(0, (base || 0) + delta);
+  }
+  h[key] = v;
+  save();
+  renderTracker();
+}
 
     function moveHole(d){ const n=state.holeIdx + d; if(n<1||n>DEFAULT_HOLES) return; state.holeIdx=n; renderTracker(); }
+
+    /* ========== Scorecard Helpers ========== */
+    function isPlayedHole(h){
+      return (h.strokesToSZ||0)+(h.strokesFromSZ||0)+(h.putts||0)>0 || Number.isInteger(h.resultOverride);
+    }
+
+function computeSegmentSummary(r, filterFn, denom){
+  let total=0, par=0, target=0, putts=0, played=0;
+  let girCount=0, gir1Count=0;
+
+  r.playOrder.forEach(no=>{
+    const h=r.holes[no-1];
+    if(!filterFn(no)) return;
+
+    const playedThis = isPlayedHole(h);
+    if(playedThis){
+      played++;
+      const auto = getGrossAuto(h, r);
+      const gross = Number.isInteger(h.resultOverride)? h.resultOverride : auto;
+      total += gross;
+      par   += h.par;
+      const {targetScore} = calcTargetsFor(h);
+      target += targetScore;
+      putts  += (h.putts||0);
+
+      const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
+      if(strokesToGreen>0){
+        if(strokesToGreen <= h.par-2) girCount++;
+        else if(strokesToGreen <= h.par-1) gir1Count++;
+      }
+    } else {
+      const {targetScore} = calcTargetsFor(h);
+      target += targetScore;
+    }
+  });
+
+  const girPct     = denom>0 ? Math.round(girCount / denom * 100) : 0;
+  const gir1Pct    = denom>0 ? Math.round(gir1Count / denom * 100) : 0;
+  const girAndPct  = denom>0 ? Math.round((girCount + gir1Count) / denom * 100) : 0; // 🟩追加
+
+  return {
+    total, par, target, putts, played,
+    vsPar: total-par,
+    vsTarget: total-target,
+    girPct,
+    gir1Pct,
+    girAndPct // 🟩追加
+  };
+}
 
     /* ========== Scorecard ========== */
     function openScorecard(){ renderScorecard(); switchView('scorecard'); }
 
     function renderScorecard(){
       const r=state.round; if(!r) return;
-      const played=r.playOrder.filter(n=>{
-        const h=r.holes[n-1];
-        return (h.strokesToSZ||0)+(h.strokesFromSZ||0)+(h.putts||0)>0 || Number.isInteger(h.resultOverride);
-      });
-      const total=played.reduce((s,n)=>{
-        const h=r.holes[n-1];
-        const auto=(h.strokesToSZ||0)+(h.strokesFromSZ||0);
-        const gross = Number.isInteger(h.resultOverride)? h.resultOverride : auto;
-        return s+gross;
-      },0);
-      const par=played.reduce((s,n)=> s+r.holes[n-1].par,0);
-      const target=played.reduce((s,n)=>{
-        const h=r.holes[n-1]; 
-        const {targetScore} = calcTargetsFor(h);
-        return s + targetScore;
-      },0);
-      const putts=played.reduce((s,n)=> s+(r.holes[n-1].putts||0),0);
+
+// 「played（入力済み）」なホールだけを集計
+const allSummary = computeSegmentSummary(r, no => isPlayedHole(r.holes[no - 1]), DEFAULT_HOLES);
+      const outSummary = computeSegmentSummary(r, no=>no>=1 && no<=9, 9);
+      const inSummary  = computeSegmentSummary(r, no=>no>=10 && no<=18, 9);
+
       const totalTargetAll = r.holes.reduce((s,x)=> s + calcTargetsFor(x).targetScore, 0);
 
       document.getElementById('sc-summary').innerHTML =
-        `<div class="grid grid-cols-6 gap-2 text-right">
-          <div><div class='grid-head'>Total</div><div class='font-bold'>${total}</div></div>
-          <div><div class='grid-head'>vs Par</div><div class='font-bold'>${pm(total-par)}</div></div>
-          <div><div class='grid-head'>vs Target</div><div class='font-bold'>${pm(total-target)}</div></div>
-          <div><div class='grid-head'>Total Target</div><div class='font-bold'>${totalTargetAll}</div></div>
-          <div><div class='grid-head'>Putts</div><div class='font-bold'>${putts}</div></div>
-          <div><div class='grid-head'>Played</div><div class='font-bold'>${played.length}/${DEFAULT_HOLES}</div></div>
+        `<div class="space-y-2">
+          <div class="grid grid-cols-8 gap-2 text-right">
+            <div><div class='grid-head'>Total</div><div class='font-bold'>${allSummary.total}</div></div>
+            <div><div class='grid-head'>vs Par</div><div class='font-bold'>${pm(allSummary.vsPar)}</div></div>
+            <div><div class='grid-head'>vs Target</div><div class='font-bold'>${pm(allSummary.vsTarget)}</div></div>
+            <div><div class='grid-head'>Total Target</div><div class='font-bold'>${totalTargetAll}</div></div>
+            <div><div class='grid-head'>Putts</div><div class='font-bold'>${allSummary.putts}</div></div>
+            <div><div class='grid-head'>Played</div><div class='font-bold'>${allSummary.played}/${DEFAULT_HOLES}</div></div>
+            <div><div class='grid-head'>GIR%</div><div class='font-bold'>${allSummary.girPct}%</div></div>
+            <div><div class='grid-head'>GIR&+1%</div><div class='font-bold'>${allSummary.girAndPct}%</div></div>
+          </div>
+          <div class="grid grid-cols-8 gap-2 text-right">
+            <div><div class='grid-head'>OUT Total</div><div class='font-bold'>${outSummary.total}</div></div>
+            <div><div class='grid-head'>OUT vs Par</div><div class='font-bold'>${pm(outSummary.vsPar)}</div></div>
+            <div><div class='grid-head'>OUT vs Target</div><div class='font-bold'>${pm(outSummary.vsTarget)}</div></div>
+            <div><div class='grid-head'>OUT Target</div><div class='font-bold'>${outSummary.target}</div></div>
+            <div><div class='grid-head'>OUT Putts</div><div class='font-bold'>${outSummary.putts}</div></div>
+            <div><div class='grid-head'>OUT Played</div><div class='font-bold'>${outSummary.played}/9</div></div>
+            <div><div class='grid-head'>OUT GIR%</div><div class='font-bold'>${outSummary.girPct}%</div></div>
+            <div><div class='grid-head'>OUT GIR&+1%</div><div class='font-bold'>${outSummary.girAndPct}%</div></div>
+          </div>
+          <div class="grid grid-cols-8 gap-2 text-right">
+            <div><div class='grid-head'>IN Total</div><div class='font-bold'>${inSummary.total}</div></div>
+            <div><div class='grid-head'>IN vs Par</div><div class='font-bold'>${pm(inSummary.vsPar)}</div></div>
+            <div><div class='grid-head'>IN vs Target</div><div class='font-bold'>${pm(inSummary.vsTarget)}</div></div>
+            <div><div class='grid-head'>IN Target</div><div class='font-bold'>${inSummary.target}</div></div>
+            <div><div class='grid-head'>IN Putts</div><div class='font-bold'>${inSummary.putts}</div></div>
+            <div><div class='grid-head'>IN Played</div><div class='font-bold'>${inSummary.played}/9</div></div>
+            <div><div class='grid-head'>IN GIR%</div><div class='font-bold'>${inSummary.girPct}%</div></div>
+            <div><div class='grid-head'>IN GIR&+1%</div><div class='font-bold'>${inSummary.girAndPct}%</div></div>
+          </div>
         </div>`;
 
       const tbody=document.getElementById('sc-tbody');
       tbody.innerHTML = r.playOrder.map(no=>{
         const h=r.holes[no-1];
-        const {targetScore, targetFrom, targetTo} = calcTargetsFor(h);
-        const grossAuto=(h.strokesToSZ||0)+(h.strokesFromSZ||0);
+        const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
+        const grossAuto = getGrossAuto(h, r);
         const gross = Number.isInteger(h.resultOverride)? h.resultOverride : grossAuto;
         const mismatch = Number.isInteger(h.resultOverride) && h.resultOverride!==grossAuto;
         const okTo=(h.strokesToSZ||0) <= targetTo;
-        const okFrom=(h.strokesFromSZ||0) <= targetFrom;
-        const okP=(h.putts||0) <= 2;
+        const okSZtoG=(h.strokesFromSZ||0) <= targetSZtoG;
+        const okGtoHO=(h.putts||0) <= targetPutts;
+
+        const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
+let girLabel = '';
+if (strokesToGreen > 0) {
+  if (strokesToGreen <= h.par - 2) {
+    // 🔵 パーオン（GIR）：青丸＋テキスト
+    girLabel = `
+      <div class="flex items-center justify-center gap-1">
+        <span class="inline-block w-3 h-3 rounded-full bg-blue-500"></span>
+        <span class="text-blue-600 font-semibold text-xs">GIR</span>
+      </div>
+    `;
+  } else if (strokesToGreen <= h.par - 1) {
+    // ✅ GIR+1：チェック＋テキスト
+    girLabel = `
+      <div class="flex items-center justify-center gap-1">
+        <span class="text-green-600 text-sm">✅</span>
+        <span class="text-green-600 font-semibold text-xs">GIR+1</span>
+      </div>
+    `;
+  }
+}
 
         return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${no}">
           <td class="p-2">${no}</td>
           <td class="p-2">${h.par}</td>
-          <td class="p-2">${pm(targetScore-h.par)}</td>
-          <td class="p-2 ${okTo?'score-ok':'score-ng'}">${h.strokesToSZ||0} <span class="text-gray-400 text-xs">(T=${targetTo})</span> ${okTo?'✅':'❌'}</td>
-          <td class="p-2 ${okFrom?'score-ok':'score-ng'}">${h.strokesFromSZ||0} ${okFrom?'✅':'❌'}</td>
-          <td class="p-2 ${okP?'score-ok':'score-ng'}">${h.putts||0} ${okP?'✅':'❌'}</td>
+          <td class="p-2">${targetScore}</td>
+          <td class="p-2 ${okTo?'score-ok':'score-ng'}">
+            ${h.strokesToSZ||0}
+            <span class="text-gray-400 text-xs">(T=${targetTo})</span>
+            ${okTo?'✅':'❌'}
+          </td>
+          <td class="p-2 ${okSZtoG?'score-ok':'score-ng'}">
+            ${h.strokesFromSZ||0}
+            <span class="text-gray-400 text-xs">(T=${targetSZtoG})</span>
+            ${okSZtoG?'✅':'❌'}
+          </td>
+          <td class="p-2 ${okGtoHO?'score-ok':'score-ng'}">
+            ${h.putts||0}
+            <span class="text-gray-400 text-xs">(T=${targetPutts})</span>
+            ${okGtoHO?'✅':'❌'}
+          </td>
           <td class="p-2 font-semibold">${gross||''} ${mismatch?'⚠️':''}</td>
           <td class="p-2">${pm(gross-targetScore)}</td>
-          <td class="p-2">${pm(gross-h.par)}</td>
+          <td class="p-2">${girLabel}</td>
         </tr>`;
       }).join('');
 
@@ -754,25 +906,37 @@
       if(!raw){ alert('Round not found.'); return; }
       const r = jparse(raw,null); if(!r){ alert('Invalid round data.'); return; }
 
-      // CSV header
       const rows = [[
-        'Hole','Par','Target','ToSZ','SZtoHO','Putts','Gross',
+        'Hole','Par','TargetScore','ToSZ','SZtoG','Putts','Gross',
         'TeeClub','TeeResult','TeeDirection',
-        'Bunker','Topped','HeavyDuff','Shank',
-        'vsTarget','vsPar'
+        'OB','Penalty','Bunker','Topped','HeavyDuff','Shank',
+        'vsTarget','vsPar','GIRLabel'
       ]];
 
       r.playOrder.forEach(no=>{
         const h = r.holes[no-1];
-        const {targetScore,targetFrom,targetTo}=calcTargetsFor(h);
-        const grossAuto=(h.strokesToSZ||0)+(h.strokesFromSZ||0);
+        const {targetScore} = calcTargetsFor(h);
+        const grossAuto = getGrossAuto(h, r);
         const gross = Number.isInteger(h.resultOverride)? h.resultOverride : grossAuto;
 
+        const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
+        let girLabel = '';
+        if(strokesToGreen>0){
+          if(strokesToGreen <= h.par-2) girLabel = 'GIR';
+          else if(strokesToGreen <= h.par-1) girLabel = 'GIR+1';
+        }
+
         rows.push([
-          no, h.par, targetScore, (h.strokesToSZ||0), (h.strokesFromSZ||0), (h.putts||0), gross,
+          no, h.par, targetScore,
+          (h.strokesToSZ||0),
+          (h.strokesFromSZ||0),
+          (h.putts||0),
+          gross,
           h.teeClub, h.teeResult, h.teeDirection,
+          (h.ob||0),(h.penalty||0),
           (h.bunker||0),(h.topped||0),(h.heavyDuff||0),(h.shank||0),
-          (gross-targetScore),(gross-h.par)
+          (gross-targetScore),(gross-h.par),
+          girLabel
         ]);
       });
 
@@ -808,13 +972,10 @@
       document.querySelectorAll('.tee-res-opt').forEach(l=> l.addEventListener('click', ()=> updateHole('teeResult', l.dataset.value)));
       document.querySelectorAll('.tee-dir-opt').forEach(l=> l.addEventListener('click', ()=> updateHole('teeDirection', l.dataset.value)));
 
-      // +/- counters (To SZ, SZ to HO, Result override, Other)
+      // +/- counters (To SZ, SZ to G, Putts, Result override, Other)
       document.querySelectorAll('[data-key][data-act]').forEach(b=> b.addEventListener('click', ()=> inc(b.dataset.key, b.dataset.act==='+'?1:-1)));
 
-      // Putts (1-5)
-      document.querySelectorAll('[data-putts]').forEach(b=> b.addEventListener('click', ()=> updateHole('putts', parseInt(b.dataset.putts,10))));
-
-      // Target toggle (Par/Bogey/D.Bogey)
+      // Target toggle
       document.getElementById('tg-par').addEventListener('click', ()=> updateHole('targetGoal','Par'));
       document.getElementById('tg-bogey').addEventListener('click', ()=> updateHole('targetGoal','Bogey'));
       document.getElementById('tg-dbogey').addEventListener('click', ()=> updateHole('targetGoal','DoubleBogey'));
@@ -831,4 +992,3 @@
   </script>
 </body>
 </html>
-
