@@ -663,33 +663,40 @@
       document.getElementById('ok-gtoho').textContent = (h.putts||0) <= targetPutts ? '✅' : '❌';
 
       // Result override with label & warning
-      const grossAuto = getGrossAuto(h, r);
-      const warnEl = document.getElementById('result-warning');
-      const dispRes = document.getElementById('disp-result');
-      const dispResLabel = document.getElementById('disp-result-label');
-      if(Number.isInteger(h.resultOverride)){
-        dispRes.textContent = h.resultOverride;
-        const diff = h.resultOverride - h.par;
-        let label = 'Par';
-        if(diff === 1) label = 'Bogey';
-        else if(diff === 2) label = 'D.Bogey';
-        else if(diff >= 3) label = `+${diff}`;
-        else if(diff === -1) label = 'Birdie';
-        else if(diff === -2) label = 'Eagle';
-        else if(diff === -3) label = 'Albatross';
-        else if(diff <= -4) label = `${diff}`;
-        dispResLabel.textContent = `(${label})`;
-      } else {
-        dispRes.textContent = '';
-        if(dispResLabel) dispResLabel.textContent = '';
-      }
-      if(Number.isInteger(h.resultOverride) && h.resultOverride!==grossAuto){
-        warnEl.textContent = `⚠️ Mismatch: To SZ + SZ to G + Putts (or old schema) = ${grossAuto}, Result = ${h.resultOverride}`;
-        warnEl.className = 'text-sm text-red-600 font-semibold';
-      } else {
-        warnEl.textContent = '';
-        warnEl.className = 'text-sm text-green-600';
-      }
+const toSz = h.strokesToSZ || 0;
+const szToG = h.strokesFromSZ || 0;
+const putts = h.putts || 0;
+const expectedTotal = toSz + szToG + putts;
+
+const warnEl = document.getElementById('result-warning');
+const dispRes = document.getElementById('disp-result');
+const dispResLabel = document.getElementById('disp-result-label');
+
+if (Number.isInteger(h.resultOverride)) {
+  dispRes.textContent = h.resultOverride;
+  const diff = h.resultOverride - h.par;
+  let label = 'Par';
+  if (diff === 1) label = 'Bogey';
+  else if (diff === 2) label = 'D.Bogey';
+  else if (diff >= 3) label = `+${diff}`;
+  else if (diff === -1) label = 'Birdie';
+  else if (diff === -2) label = 'Eagle';
+  else if (diff === -3) label = 'Albatross';
+  else if (diff <= -4) label = `${diff}`;
+  dispResLabel.textContent = `(${label})`;
+} else {
+  dispRes.textContent = '';
+  if (dispResLabel) dispResLabel.textContent = '';
+}
+
+// ⚠️ Mismatch ロジックを修正
+if (Number.isInteger(h.resultOverride) && h.resultOverride !== expectedTotal) {
+  warnEl.textContent = `⚠️ Mismatch: To SZ + SZ to G + Putts = ${expectedTotal}, Result = ${h.resultOverride}`;
+  warnEl.className = 'text-sm text-red-600 font-semibold';
+} else {
+  warnEl.textContent = '';
+  warnEl.className = 'text-sm text-green-600';
+}
 
       document.getElementById('other-ob').textContent=h.ob||0;
       document.getElementById('other-penalty').textContent=h.penalty||0;
