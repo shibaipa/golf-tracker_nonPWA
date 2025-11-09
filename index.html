@@ -875,11 +875,17 @@ if (strokesToGreen > 0) {
   }
 }
 
-        return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${no}">
-          <td class="p-2">${no}</td>
-          <td class="p-2">${h.par}</td>
-          <td class="p-2">${targetScore}</td>
-          <td class="p-2 ${okTo?'score-ok':'score-ng'}">
+// 🔧 Target列のvs Par 表示用ロジックを追加
+const diffVsPar = targetScore - h.par;
+let targetDisplay = 'E';
+if (diffVsPar > 0) targetDisplay = `+${diffVsPar}`;
+else if (diffVsPar < 0) targetDisplay = `${diffVsPar}`;
+
+return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${no}">
+  <td class="p-2">${no}</td>
+  <td class="p-2">${h.par}</td>
+  <td class="p-2">${targetDisplay}</td>   <!-- ← ここを修正 -->
+  <td class="p-2 ${okTo?'score-ok':'score-ng'}">
             ${h.strokesToSZ||0}
             <span class="text-gray-400 text-xs">(T=${targetTo})</span>
             ${okTo?'✅':'❌'}
