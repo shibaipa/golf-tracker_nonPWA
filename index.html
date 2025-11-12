@@ -277,10 +277,18 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
+</div>
 
-    </section>
+<!-- 🆕 Memo field -->
+<div class="mt-4">
+  <div class="p-3 rounded-lg border">
+    <div class="text-sm font-semibold mb-2">Memo</div>
+    <textarea id="hole-memo" class="w-full border rounded-md p-2 text-sm" rows="2" placeholder="Notes for this hole..."></textarea>
+  </div>
+</div>
+
+</section>
 
     <!-- ===== View: SCORECARD ===== -->
     <section id="view-scorecard" class="hidden">
@@ -338,16 +346,17 @@
       const holes=[];
       for(let i=1;i<=DEFAULT_HOLES;i++){
         holes.push({
-          hole:i, par:parseInt(parArr[i-1]||4,10),
-          teeClub:'1W', teeResult:'Stay Course', teeDirection:'Straight',
-          strokesToSZ:0,    // Tee → SZ
-          strokesFromSZ:0,  // SZ → G
-          putts:0,          // G → HO（Putts）
-          resultOverride:null,
-          targetGoal: (targets && targets[i-1]) || 'Bogey',
-          ob:0, penalty:0,
-          bunker:0,topped:0,heavyDuff:0,shank:0
-        });
+  hole:i, par:parseInt(parArr[i-1]||4,10),
+  teeClub:'1W', teeResult:'Stay Course', teeDirection:'Straight',
+  strokesToSZ:0,    // Tee → SZ
+  strokesFromSZ:0,  // SZ → G
+  putts:0,          // G → HO（Putts）
+  resultOverride:null,
+  targetGoal: (targets && targets[i-1]) || 'Bogey',
+  ob:0, penalty:0,
+  bunker:0,topped:0,heavyDuff:0,shank:0,
+  memo:'' // 🆕 ←これを追加
+});
       }
       return {
         roundId:id,
@@ -709,6 +718,15 @@ if (Number.isInteger(h.resultOverride) && h.resultOverride !== expectedTotal) {
       document.getElementById('tg-par').classList.toggle('on', h.targetGoal==='Par');
       document.getElementById('tg-bogey').classList.toggle('on', h.targetGoal==='Bogey');
       document.getElementById('tg-dbogey').classList.toggle('on', h.targetGoal==='DoubleBogey');
+      
+      // 🆕 Memo表示更新
+document.getElementById('hole-memo').value = h.memo || '';
+document.getElementById('hole-memo').oninput = (e)=>{
+  h.memo = e.target.value;
+  save();
+};
+      
+      
     }
 
     function updateHole(key, val){ const h=curHole(); h[key]=val; save(); renderTracker(); }
@@ -921,12 +939,12 @@ return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${n
       if(!raw){ alert('Round not found.'); return; }
       const r = jparse(raw,null); if(!r){ alert('Invalid round data.'); return; }
 
-      const rows = [[
-        'Hole','Par','TargetScore','ToSZ','SZtoG','Putts','Gross',
-        'TeeClub','TeeResult','TeeDirection',
-        'OB','Penalty','Bunker','Topped','HeavyDuff','Shank',
-        'vsTarget','vsPar','GIRLabel'
-      ]];
+const rows = [[
+  'Hole','Par','TargetScore','ToSZ','SZtoG','Putts','Gross',
+  'TeeClub','TeeResult','TeeDirection',
+  'OB','Penalty','Bunker','Topped','HeavyDuff','Shank',
+  'vsTarget','vsPar','GIRLabel','Memo' // 🆕 ← 追加
+]];
 
       r.playOrder.forEach(no=>{
         const h = r.holes[no-1];
@@ -941,18 +959,19 @@ return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${n
           else if(strokesToGreen <= h.par-1) girLabel = 'GIR+1';
         }
 
-        rows.push([
-          no, h.par, targetScore,
-          (h.strokesToSZ||0),
-          (h.strokesFromSZ||0),
-          (h.putts||0),
-          gross,
-          h.teeClub, h.teeResult, h.teeDirection,
-          (h.ob||0),(h.penalty||0),
-          (h.bunker||0),(h.topped||0),(h.heavyDuff||0),(h.shank||0),
-          (gross-targetScore),(gross-h.par),
-          girLabel
-        ]);
+  rows.push([
+  no, h.par, targetScore,
+  (h.strokesToSZ||0),
+  (h.strokesFromSZ||0),
+  (h.putts||0),
+  gross,
+  h.teeClub, h.teeResult, h.teeDirection,
+  (h.ob||0),(h.penalty||0),
+  (h.bunker||0),(h.topped||0),(h.heavyDuff||0),(h.shank||0),
+  (gross-targetScore),(gross-h.par),
+  girLabel,
+  h.memo || '' // 🆕 ← 追加
+]);
       });
 
       const csv = rows.map(r=>r.map(x=>String(x).replace(/"/g,'""')).map(x=>`"${x}"`).join(',')).join('\n');
