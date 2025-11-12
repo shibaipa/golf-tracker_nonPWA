@@ -218,77 +218,132 @@
             <button type="button" data-key="resultOverride" data-act="+" class="p-3 bg-gray-100 rounded-r-md text-xl">+</button>
           </div>
           <div class="text-xs text-gray-500 mt-1">
-            If set, scorecard uses this value. Mismatch with (To SZ + SZ to G + Putts) shows a warning (for new rounds).
+            If set, scorecard uses this value. Mismatch with (To SZ + SZ to G + Putts) shows a warning.
           </div>
         </div>
       </div>
 
-      <!-- Other -->
-      <div class="grid md:grid-cols-3 gap-4 mt-4">
-        <div class="p-3 rounded-lg border md:col-span-3">
-          <div class="text-sm font-semibold mb-2">Other</div>
+      <!-- Other (split: To SZ / SZ to G) -->
+      <div class="grid md:grid-cols-2 gap-4 mt-4">
+        <!-- To SZ Other -->
+        <div class="p-3 rounded-lg border">
+          <div class="text-sm font-semibold mb-2">Other — To SZ</div>
           <div class="grid md:grid-cols-3 gap-3">
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">OB</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="ob" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-ob" class="text-xl font-bold">0</div>
-                <button type="button" data-key="ob" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.ob" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-ob" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.ob" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Penalty</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="penalty" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-penalty" class="text-xl font-bold">0</div>
-                <button type="button" data-key="penalty" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.penalty" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-penalty" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.penalty" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Bunker</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="bunker" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-bunker" class="text-xl font-bold">0</div>
-                <button type="button" data-key="bunker" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.bunker" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-bunker" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.bunker" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Topped</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="topped" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-topped" class="text-xl font-bold">0</div>
-                <button type="button" data-key="topped" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.topped" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-topped" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.topped" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Heavy Duff</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="heavyDuff" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-heavyDuff" class="text-xl font-bold">0</div>
-                <button type="button" data-key="heavyDuff" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.heavyDuff" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-heavyDuff" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.heavyDuff" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
             <div class="border rounded-md p-2 text-center">
               <div class="text-xs text-gray-500">Shank</div>
               <div class="flex items-center justify-between">
-                <button type="button" data-key="shank" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
-                <div id="other-shank" class="text-xl font-bold">0</div>
-                <button type="button" data-key="shank" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+                <button type="button" data-key="toSZ.shank" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="toSZ-shank" class="text-xl font-bold">0</div>
+                <button type="button" data-key="toSZ.shank" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
               </div>
             </div>
           </div>
+        </div>
+        <!-- SZ to G Other -->
+        <div class="p-3 rounded-lg border">
+          <div class="text-sm font-semibold mb-2">Other — SZ to G</div>
+          <div class="grid md:grid-cols-3 gap-3">
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">OB</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.ob" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-ob" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.ob" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Penalty</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.penalty" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-penalty" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.penalty" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Bunker</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.bunker" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-bunker" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.bunker" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Topped</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.topped" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-topped" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.topped" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Heavy Duff</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.heavyDuff" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-heavyDuff" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.heavyDuff" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+            <div class="border rounded-md p-2 text-center">
+              <div class="text-xs text-gray-500">Shank</div>
+              <div class="flex items-center justify-between">
+                <button type="button" data-key="szToG.shank" data-act="-" class="px-3 py-2 bg-gray-100 rounded">-</button>
+                <div id="szToG-shank" class="text-xl font-bold">0</div>
+                <button type="button" data-key="szToG.shank" data-act="+" class="px-3 py-2 bg-gray-100 rounded">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-</div>
 
-<!-- 🆕 Memo field -->
-<div class="mt-4">
-  <div class="p-3 rounded-lg border">
-    <div class="text-sm font-semibold mb-2">Memo</div>
-    <textarea id="hole-memo" class="w-full border rounded-md p-2 text-sm" rows="2" placeholder="Notes for this hole..."></textarea>
-  </div>
-</div>
+      <!-- Memo -->
+      <div class="mt-4">
+        <div class="p-3 rounded-lg border">
+          <div class="text-sm font-semibold mb-2">Memo</div>
+          <textarea id="hole-memo" class="w-full border rounded-md p-2 text-sm" rows="2" placeholder="Notes for this hole..."></textarea>
+        </div>
+      </div>
 
-</section>
+    </section>
 
     <!-- ===== View: SCORECARD ===== -->
     <section id="view-scorecard" class="hidden">
@@ -306,7 +361,7 @@
             <tr>
               <th class="p-2 text-right">H</th>
               <th class="p-2 text-right">Par</th>
-              <th class="p-2 text-right">Target</th>
+              <th class="p-2 text-right">Target (vs Par)</th>
               <th class="p-2 text-right">To SZ</th>
               <th class="p-2 text-right">SZ to G</th>
               <th class="p-2 text-right">Putts</th>
@@ -324,7 +379,7 @@
   <script>
     /* ========== State & Storage ========== */
     const DEFAULT_HOLES = 18, MIN_PAR=3, MAX_PAR=5;
-    const idxKey='gr_ids_v2'; const keyFor=(id)=>`gr_${id}_v2`;
+    const idxKey='gr_ids_v3'; const keyFor=(id)=>`gr_${id}_v3`;
     const storage={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},remove:(k)=>{try{localStorage.removeItem(k)}catch(e){}}};
     const jparse=(s,f)=>{try{return JSON.parse(s)}catch(_){return f}};
     const pm=(v)=> v===0? 'E' : (v>0? `+${v}` : `${v}`);
@@ -346,17 +401,18 @@
       const holes=[];
       for(let i=1;i<=DEFAULT_HOLES;i++){
         holes.push({
-  hole:i, par:parseInt(parArr[i-1]||4,10),
-  teeClub:'1W', teeResult:'Stay Course', teeDirection:'Straight',
-  strokesToSZ:0,    // Tee → SZ
-  strokesFromSZ:0,  // SZ → G
-  putts:0,          // G → HO（Putts）
-  resultOverride:null,
-  targetGoal: (targets && targets[i-1]) || 'Bogey',
-  ob:0, penalty:0,
-  bunker:0,topped:0,heavyDuff:0,shank:0,
-  memo:'' // 🆕 ←これを追加
-});
+          hole:i, par:parseInt(parArr[i-1]||4,10),
+          teeClub:'1W', teeResult:'Stay Course', teeDirection:'Straight',
+          strokesToSZ:0,    // Tee → SZ
+          strokesFromSZ:0,  // SZ → G
+          putts:0,          // G → HO（Putts）
+          resultOverride:null,
+          targetGoal: (targets && targets[i-1]) || 'Bogey',
+          // 🆕 split other
+          toSZ:{ ob:0, penalty:0, bunker:0, topped:0, heavyDuff:0, shank:0 },
+          szToG:{ ob:0, penalty:0, bunker:0, topped:0, heavyDuff:0, shank:0 },
+          memo:''
+        });
       }
       return {
         roundId:id,
@@ -366,7 +422,7 @@
         holes,
         playStart:start||'OUT',
         playOrder:playOrderFor(start||'OUT'),
-        schemaVersion:'v2'
+        schemaVersion:'v3'
       };
     }
 
@@ -378,20 +434,48 @@
       storage.set(idxKey, JSON.stringify([...ids]));
     }
 
+    // Upgrade old schemas to v3 on load
+    function upgradeRoundIfNeeded(r){
+      if(!r) return r;
+      if(r.schemaVersion === 'v3') return r;
+      // add playOrder if missing
+      if(!r.playOrder) r.playOrder = playOrderFor(r.playStart||'OUT');
+      // upgrade holes
+      r.holes.forEach(h=>{
+        if(!h.toSZ || !h.szToG){
+          const legacy = { ob:h.ob||0, penalty:h.penalty||0, bunker:h.bunker||0, topped:h.topped||0, heavyDuff:h.heavyDuff||0, shank:h.shank||0 };
+          h.toSZ = { ...legacy };
+          h.szToG = { ob:0, penalty:0, bunker:0, topped:0, heavyDuff:0, shank:0 };
+          // clean legacy keys
+          delete h.ob; delete h.penalty; delete h.bunker; delete h.topped; delete h.heavyDuff; delete h.shank;
+        }
+        if(typeof h.memo!=="string") h.memo='';
+        if(!Number.isInteger(h.putts)) h.putts = h.putts||0;
+      });
+      r.schemaVersion = 'v3';
+      return r;
+    }
+
     function loadRounds(){
       const ids=jparse(storage.get(idxKey)||'[]',[]);
-      state.rounds = ids.map(id=>jparse(storage.get(keyFor(id))||'null',null))
-        .filter(Boolean)
+      state.rounds = ids.map(id=>{
+        const raw = storage.get(keyFor(id));
+        const r = jparse(raw||'null',null);
+        return upgradeRoundIfNeeded(r);
+      }).filter(Boolean)
         .sort((a,b)=> new Date(b.date)-new Date(a.date));
+      // persist any upgrades
+      state.rounds.forEach(r=>{ state.round = r; state.roundId = r.roundId; save(); });
+      state.round = null; state.roundId = null;
       renderOverview();
     }
 
     function openRound(id){
       const raw=storage.get(keyFor(id));
       if(!raw){ switchView('overview'); return;}
-      state.roundId=id; state.round=jparse(raw,null);
+      state.roundId=id; state.round=upgradeRoundIfNeeded(jparse(raw,null));
       if(!state.round.playOrder) state.round.playOrder=playOrderFor(state.round.playStart||'OUT');
-      state.holeIdx=1;
+      state.holeIdx=1; save();
       switchView('tracker');
       renderTracker();
     }
@@ -399,7 +483,7 @@
     function editRound(id){
       const raw=storage.get(keyFor(id));
       if(!raw){ return; }
-      const r=jparse(raw,null);
+      const r=upgradeRoundIfNeeded(jparse(raw,null));
       state.editingId = id;
       state.roundId = id;
       state.round = r;
@@ -424,37 +508,34 @@
     }
 
     /* ========== Targets & Gross Logic ========== */
-    // Par / TargetScore によるターゲット表
-   function calcTargetsFor(h){
-  const adj = (h.targetGoal === 'Bogey' ? 1 : (h.targetGoal === 'DoubleBogey' ? 2 : 0));
-  const targetScore = h.par + adj;
+    function calcTargetsFor(h){
+      const adj = (h.targetGoal==='Bogey'?1:(h.targetGoal==='DoubleBogey'?2:0));
+      const targetScore = h.par + adj;
 
-  let targetTo = 0;
-  let targetSZtoG = 0;
-  let targetPutts = 2; // 全ケース2固定
+      let targetTo = 0;
+      let targetSZtoG = 0;
+      let targetPutts = 2; // 全ケース2
 
-  if (h.par === 3) {
-    if (targetScore === 3) { targetTo = 1; targetSZtoG = 0; }
-    else if (targetScore === 4) { targetTo = 1; targetSZtoG = 1; }
-    else if (targetScore === 5) { targetTo = 1; targetSZtoG = 2; }
-  } else if (h.par === 4) {
-    if (targetScore === 4) { targetTo = 2; targetSZtoG = 0; }
-    else if (targetScore === 5) { targetTo = 2; targetSZtoG = 1; }
-    else if (targetScore === 6) { targetTo = 2; targetSZtoG = 2; }
-  } else if (h.par === 5) {
-    if (targetScore === 5) { targetTo = 2; targetSZtoG = 1; }   // 修正①
-    else if (targetScore === 6) { targetTo = 3; targetSZtoG = 1; } // 修正②
-    else if (targetScore === 7) { targetTo = 3; targetSZtoG = 2; } // 修正③（同じ）
-  }
+      if(h.par === 3){
+        if(targetScore === 3){ targetTo=1; targetSZtoG=0; }
+        else if(targetScore === 4){ targetTo=1; targetSZtoG=1; }
+        else if(targetScore === 5){ targetTo=1; targetSZtoG=2; }
+      } else if(h.par === 4){
+        if(targetScore === 4){ targetTo=2; targetSZtoG=0; }
+        else if(targetScore === 5){ targetTo=2; targetSZtoG=1; }
+        else if(targetScore === 6){ targetTo=2; targetSZtoG=2; }
+      } else if(h.par === 5){
+        if(targetScore === 5){ targetTo=2; targetSZtoG=1; }
+        else if(targetScore === 6){ targetTo=3; targetSZtoG=1; }
+        else if(targetScore === 7){ targetTo=3; targetSZtoG=2; }
+      }
 
-  return { targetScore, targetTo, targetSZtoG, targetPutts };
-}
+      return {targetScore, targetTo, targetSZtoG, targetPutts};
+    }
 
-    // v1: ToSZ + SZtoHO
-    // v2: ToSZ + SZtoG + Putts
     function getGrossAuto(h, round){
       const base = (h.strokesToSZ||0) + (h.strokesFromSZ||0);
-      const isV2 = round && round.schemaVersion === 'v2';
+      const isV2 = round && (round.schemaVersion === 'v2' || round.schemaVersion==='v3');
       if(isV2){
         return base + (h.putts||0);
       }
@@ -588,8 +669,8 @@
         r.date = date; r.courseName = course;
         r.playStart = state.startOrder;
         r.playOrder = playOrderFor(state.startOrder);
-        r.holes.forEach((h,idx)=>{ 
-          h.par = state.parSetup[idx]; 
+        r.holes.forEach((h,idx)=>{
+          h.par = state.parSetup[idx];
           h.targetGoal = state.setupTargets[idx] || 'Bogey';
         });
         save(); loadRounds(); openRound(state.editingId);
@@ -601,8 +682,28 @@
       state.round=r; state.roundId=id; save(); openRound(id);
     }
 
-    /* ========== Tracker Helpers ========== */
+    /* ========== Helpers ========== */
     const curHole = ()=> state.round.holes[state.round.playOrder[state.holeIdx-1]-1];
+
+    function setByPath(obj, path, value){
+      const parts = path.split('.');
+      let ref = obj;
+      for(let i=0;i<parts.length-1;i++){
+        const k = parts[i];
+        if(!(k in ref) || typeof ref[k] !== 'object') ref[k] = {};
+        ref = ref[k];
+      }
+      ref[parts[parts.length-1]] = value;
+    }
+    function getByPath(obj, path){
+      const parts = path.split('.');
+      let ref = obj;
+      for(const k of parts){
+        if(ref==null) return undefined;
+        ref = ref[k];
+      }
+      return ref;
+    }
 
     /* ========== Tracker ========== */
     function renderTracker(){
@@ -671,94 +772,89 @@
       document.getElementById('ok-from').textContent = (h.strokesFromSZ||0) <= targetSZtoG ? '✅' : '❌';
       document.getElementById('ok-gtoho').textContent = (h.putts||0) <= targetPutts ? '✅' : '❌';
 
-      // Result override with label & warning
-const toSz = h.strokesToSZ || 0;
-const szToG = h.strokesFromSZ || 0;
-const putts = h.putts || 0;
-const expectedTotal = toSz + szToG + putts;
+      // Result override with label & warning (修正6: 3要素合計と比較)
+      const toSz = h.strokesToSZ || 0;
+      const szToG = h.strokesFromSZ || 0;
+      const putts = h.putts || 0;
+      const expectedTotal = toSz + szToG + putts;
 
-const warnEl = document.getElementById('result-warning');
-const dispRes = document.getElementById('disp-result');
-const dispResLabel = document.getElementById('disp-result-label');
+      const warnEl = document.getElementById('result-warning');
+      const dispRes = document.getElementById('disp-result');
+      const dispResLabel = document.getElementById('disp-result-label');
+      if(Number.isInteger(h.resultOverride)){
+        dispRes.textContent = h.resultOverride;
+        const diff = h.resultOverride - h.par;
+        let label = 'Par';
+        if(diff === 1) label = 'Bogey';
+        else if(diff === 2) label = 'D.Bogey';
+        else if(diff >= 3) label = `+${diff}`;
+        else if(diff === -1) label = 'Birdie';
+        else if(diff === -2) label = 'Eagle';
+        else if(diff === -3) label = 'Albatross';
+        else if(diff <= -4) label = `${diff}`;
+        dispResLabel.textContent = `(${label})`;
+      } else {
+        dispRes.textContent = '';
+        if(dispResLabel) dispResLabel.textContent = '';
+      }
+      if(Number.isInteger(h.resultOverride) && h.resultOverride!==expectedTotal){
+        warnEl.textContent = `⚠️ Mismatch: To SZ + SZ to G + Putts = ${expectedTotal}, Result = ${h.resultOverride}`;
+        warnEl.className = 'text-sm text-red-600 font-semibold';
+      } else {
+        warnEl.textContent = '';
+        warnEl.className = 'text-sm text-green-600';
+      }
 
-if (Number.isInteger(h.resultOverride)) {
-  dispRes.textContent = h.resultOverride;
-  const diff = h.resultOverride - h.par;
-  let label = 'Par';
-  if (diff === 1) label = 'Bogey';
-  else if (diff === 2) label = 'D.Bogey';
-  else if (diff >= 3) label = `+${diff}`;
-  else if (diff === -1) label = 'Birdie';
-  else if (diff === -2) label = 'Eagle';
-  else if (diff === -3) label = 'Albatross';
-  else if (diff <= -4) label = `${diff}`;
-  dispResLabel.textContent = `(${label})`;
-} else {
-  dispRes.textContent = '';
-  if (dispResLabel) dispResLabel.textContent = '';
-}
+      // Other (split) display
+      document.getElementById('toSZ-ob').textContent = h.toSZ.ob||0;
+      document.getElementById('toSZ-penalty').textContent = h.toSZ.penalty||0;
+      document.getElementById('toSZ-bunker').textContent = h.toSZ.bunker||0;
+      document.getElementById('toSZ-topped').textContent = h.toSZ.topped||0;
+      document.getElementById('toSZ-heavyDuff').textContent = h.toSZ.heavyDuff||0;
+      document.getElementById('toSZ-shank').textContent = h.toSZ.shank||0;
 
-// ⚠️ Mismatch ロジックを修正
-if (Number.isInteger(h.resultOverride) && h.resultOverride !== expectedTotal) {
-  warnEl.textContent = `⚠️ Mismatch: To SZ + SZ to G + Putts = ${expectedTotal}, Result = ${h.resultOverride}`;
-  warnEl.className = 'text-sm text-red-600 font-semibold';
-} else {
-  warnEl.textContent = '';
-  warnEl.className = 'text-sm text-green-600';
-}
-
-      document.getElementById('other-ob').textContent=h.ob||0;
-      document.getElementById('other-penalty').textContent=h.penalty||0;
-      document.getElementById('other-bunker').textContent=h.bunker||0;
-      document.getElementById('other-topped').textContent=h.topped||0;
-      document.getElementById('other-heavyDuff').textContent=h.heavyDuff||0;
-      document.getElementById('other-shank').textContent=h.shank||0;
+      document.getElementById('szToG-ob').textContent = h.szToG.ob||0;
+      document.getElementById('szToG-penalty').textContent = h.szToG.penalty||0;
+      document.getElementById('szToG-bunker').textContent = h.szToG.bunker||0;
+      document.getElementById('szToG-topped').textContent = h.szToG.topped||0;
+      document.getElementById('szToG-heavyDuff').textContent = h.szToG.heavyDuff||0;
+      document.getElementById('szToG-shank').textContent = h.szToG.shank||0;
 
       // Target toggles
       document.getElementById('tg-par').classList.toggle('on', h.targetGoal==='Par');
       document.getElementById('tg-bogey').classList.toggle('on', h.targetGoal==='Bogey');
       document.getElementById('tg-dbogey').classList.toggle('on', h.targetGoal==='DoubleBogey');
-      
-      // 🆕 Memo表示更新
-document.getElementById('hole-memo').value = h.memo || '';
-document.getElementById('hole-memo').oninput = (e)=>{
-  h.memo = e.target.value;
-  save();
-};
-      
-      
+
+      // Memo
+      document.getElementById('hole-memo').value = h.memo || '';
+      document.getElementById('hole-memo').oninput = (e)=>{
+        h.memo = e.target.value; save();
+      };
     }
 
-    function updateHole(key, val){ const h=curHole(); h[key]=val; save(); renderTracker(); }
+    function updateHole(key, val){ const h=curHole(); setByPath(h, key, val); save(); renderTracker(); }
 
-    // 「最初の＋」でターゲット値を入れるインクリメント
-   function inc(key, delta){
-  const h = curHole();
-  const r = state.round;
-  const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
+    // 「最初の＋」でターゲット値を入れるインクリメント（修正2含む）
+    function inc(key, delta){
+      const h = curHole();
+      const r = state.round;
+      const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
 
-  const base = (h[key]==null ? 0 : h[key]);
-  let v;
-  if (delta > 0 && (h[key]==null || h[key]===0)) {
-    if (key === 'resultOverride') {
-      v = targetScore;
-    } else if (key === 'strokesToSZ') {
-      v = targetTo;
-    } else if (key === 'strokesFromSZ') {
-      // 👇 修正点：ターゲットが0の時は1を初期値にする
-      v = (targetSZtoG === 0 ? 1 : targetSZtoG);
-    } else if (key === 'putts') {
-      v = targetPutts;
-    } else {
-      v = 1;
+      const baseRaw = getByPath(h, key);
+      const base = (baseRaw==null ? 0 : baseRaw);
+      let v;
+      if (delta > 0 && (baseRaw==null || base===0)) {
+        if (key === 'resultOverride')      v = targetScore;
+        else if (key === 'strokesToSZ')    v = targetTo;
+        else if (key === 'strokesFromSZ')  v = (targetSZtoG === 0 ? 1 : targetSZtoG); // 修正2
+        else if (key === 'putts')          v = targetPutts;
+        else                               v = 1; // other系やネストキーの初期値
+      } else {
+        v = Math.max(0, (base||0) + delta);
+      }
+      setByPath(h, key, v);
+      save(); renderTracker();
     }
-  } else {
-    v = Math.max(0, (base || 0) + delta);
-  }
-  h[key] = v;
-  save();
-  renderTracker();
-}
 
     function moveHole(d){ const n=state.holeIdx + d; if(n<1||n>DEFAULT_HOLES) return; state.holeIdx=n; renderTracker(); }
 
@@ -767,49 +863,49 @@ document.getElementById('hole-memo').oninput = (e)=>{
       return (h.strokesToSZ||0)+(h.strokesFromSZ||0)+(h.putts||0)>0 || Number.isInteger(h.resultOverride);
     }
 
-function computeSegmentSummary(r, filterFn, denom){
-  let total=0, par=0, target=0, putts=0, played=0;
-  let girCount=0, gir1Count=0;
+    function computeSegmentSummary(r, filterFn, denom){
+      let total=0, par=0, target=0, putts=0, played=0;
+      let girCount=0, gir1Count=0;
 
-  r.playOrder.forEach(no=>{
-    const h=r.holes[no-1];
-    if(!filterFn(no)) return;
+      r.playOrder.forEach(no=>{
+        const h=r.holes[no-1];
+        if(!filterFn(no)) return;
 
-    const playedThis = isPlayedHole(h);
-    if(playedThis){
-      played++;
-      const auto = getGrossAuto(h, r);
-      const gross = Number.isInteger(h.resultOverride)? h.resultOverride : auto;
-      total += gross;
-      par   += h.par;
-      const {targetScore} = calcTargetsFor(h);
-      target += targetScore;
-      putts  += (h.putts||0);
+        const playedThis = isPlayedHole(h);
+        if(playedThis){
+          played++;
+          const auto = getGrossAuto(h, r);
+          const gross = Number.isInteger(h.resultOverride)? h.resultOverride : auto;
+          total += gross;
+          par   += h.par;
+          const {targetScore} = calcTargetsFor(h);
+          target += targetScore;
+          putts  += (h.putts||0);
 
-      const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
-      if(strokesToGreen>0){
-        if(strokesToGreen <= h.par-2) girCount++;
-        else if(strokesToGreen <= h.par-1) gir1Count++;
-      }
-    } else {
-      const {targetScore} = calcTargetsFor(h);
-      target += targetScore;
+          const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
+          if(strokesToGreen>0){
+            if(strokesToGreen <= h.par-2) girCount++;
+            else if(strokesToGreen <= h.par-1) gir1Count++;
+          }
+        } else {
+          const {targetScore} = calcTargetsFor(h);
+          target += targetScore;
+        }
+      });
+
+      const girPct     = denom>0 ? Math.round(girCount / denom * 100) : 0;
+      const gir1Pct    = denom>0 ? Math.round(gir1Count / denom * 100) : 0;
+      const girAndPct  = denom>0 ? Math.round((girCount + gir1Count) / denom * 100) : 0; // 修正4
+
+      return {
+        total, par, target, putts, played,
+        vsPar: total-par,
+        vsTarget: total-target,
+        girPct,
+        gir1Pct,
+        girAndPct
+      };
     }
-  });
-
-  const girPct     = denom>0 ? Math.round(girCount / denom * 100) : 0;
-  const gir1Pct    = denom>0 ? Math.round(gir1Count / denom * 100) : 0;
-  const girAndPct  = denom>0 ? Math.round((girCount + gir1Count) / denom * 100) : 0; // 🟩追加
-
-  return {
-    total, par, target, putts, played,
-    vsPar: total-par,
-    vsTarget: total-target,
-    girPct,
-    gir1Pct,
-    girAndPct // 🟩追加
-  };
-}
 
     /* ========== Scorecard ========== */
     function openScorecard(){ renderScorecard(); switchView('scorecard'); }
@@ -817,8 +913,8 @@ function computeSegmentSummary(r, filterFn, denom){
     function renderScorecard(){
       const r=state.round; if(!r) return;
 
-// 「played（入力済み）」なホールだけを集計
-const allSummary = computeSegmentSummary(r, no => isPlayedHole(r.holes[no - 1]), DEFAULT_HOLES);
+      // 修正3: Total は入力済みホールのみ
+      const allSummary = computeSegmentSummary(r, no => isPlayedHole(r.holes[no - 1]), DEFAULT_HOLES);
       const outSummary = computeSegmentSummary(r, no=>no>=1 && no<=9, 9);
       const inSummary  = computeSegmentSummary(r, no=>no>=10 && no<=18, 9);
 
@@ -864,46 +960,44 @@ const allSummary = computeSegmentSummary(r, no => isPlayedHole(r.holes[no - 1]),
         const {targetScore, targetTo, targetSZtoG, targetPutts} = calcTargetsFor(h);
         const grossAuto = getGrossAuto(h, r);
         const gross = Number.isInteger(h.resultOverride)? h.resultOverride : grossAuto;
-        // 🔧 mismatch判定を修正
-const expectedTotal = (h.strokesToSZ || 0) + (h.strokesFromSZ || 0) + (h.putts || 0);
-const mismatch = Number.isInteger(h.resultOverride) && h.resultOverride !== expectedTotal;
+        // 修正6: mismatchは3要素合計と比較
+        const expectedTotal = (h.strokesToSZ||0) + (h.strokesFromSZ||0) + (h.putts||0);
+        const mismatch = Number.isInteger(h.resultOverride) && h.resultOverride!==expectedTotal;
         const okTo=(h.strokesToSZ||0) <= targetTo;
         const okSZtoG=(h.strokesFromSZ||0) <= targetSZtoG;
         const okGtoHO=(h.putts||0) <= targetPutts;
 
         const strokesToGreen = (h.strokesToSZ||0)+(h.strokesFromSZ||0);
-let girLabel = '';
-if (strokesToGreen > 0) {
-  if (strokesToGreen <= h.par - 2) {
-    // 🔵 パーオン（GIR）：青丸＋テキスト
-    girLabel = `
-      <div class="flex items-center justify-center gap-1">
-        <span class="inline-block w-3 h-3 rounded-full bg-blue-500"></span>
-        <span class="text-blue-600 font-semibold text-xs">GIR</span>
-      </div>
-    `;
-  } else if (strokesToGreen <= h.par - 1) {
-    // ✅ GIR+1：チェック＋テキスト
-    girLabel = `
-      <div class="flex items-center justify-center gap-1">
-        <span class="text-green-600 text-sm">✅</span>
-        <span class="text-green-600 font-semibold text-xs">GIR+1</span>
-      </div>
-    `;
-  }
-}
+        let girLabel = '';
+        if (strokesToGreen > 0) {
+          if (strokesToGreen <= h.par - 2) {
+            girLabel = `
+              <div class="flex items-center justify-center gap-1">
+                <span class="inline-block w-3 h-3 rounded-full bg-blue-500"></span>
+                <span class="text-blue-600 font-semibold text-xs">GIR</span>
+              </div>
+            `;
+          } else if (strokesToGreen <= h.par - 1) {
+            girLabel = `
+              <div class="flex items-center justify-center gap-1">
+                <span class="text-green-600 text-sm">✅</span>
+                <span class="text-green-600 font-semibold text-xs">GIR+1</span>
+              </div>
+            `;
+          }
+        }
 
-// 🔧 Target列のvs Par 表示用ロジックを追加
-const diffVsPar = targetScore - h.par;
-let targetDisplay = 'E';
-if (diffVsPar > 0) targetDisplay = `+${diffVsPar}`;
-else if (diffVsPar < 0) targetDisplay = `${diffVsPar}`;
+        // 修正7: Target列を vs Par 表示
+        const diffVsPar = targetScore - h.par;
+        let targetDisplay = 'E';
+        if (diffVsPar > 0) targetDisplay = `+${diffVsPar}`;
+        else if (diffVsPar < 0) targetDisplay = `${diffVsPar}`;
 
-return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${no}">
-  <td class="p-2">${no}</td>
-  <td class="p-2">${h.par}</td>
-  <td class="p-2">${targetDisplay}</td>   <!-- ← ここを修正 -->
-  <td class="p-2 ${okTo?'score-ok':'score-ng'}">
+        return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${no}">
+          <td class="p-2">${no}</td>
+          <td class="p-2">${h.par}</td>
+          <td class="p-2">${targetDisplay}</td>
+          <td class="p-2 ${okTo?'score-ok':'score-ng'}">
             ${h.strokesToSZ||0}
             <span class="text-gray-400 text-xs">(T=${targetTo})</span>
             ${okTo?'✅':'❌'}
@@ -920,7 +1014,7 @@ return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${n
           </td>
           <td class="p-2 font-semibold">${gross||''} ${mismatch?'⚠️':''}</td>
           <td class="p-2">${pm(gross-targetScore)}</td>
-          <td class="p-2">${girLabel}</td>
+          <td class="p-2 text-center">${girLabel}</td>
         </tr>`;
       }).join('');
 
@@ -937,14 +1031,16 @@ return `<tr class="hover:bg-gray-50 ${gross===0?'opacity-50':''}" data-goto="${n
     function exportRoundCSV(id){
       const raw = storage.get(keyFor(id));
       if(!raw){ alert('Round not found.'); return; }
-      const r = jparse(raw,null); if(!r){ alert('Invalid round data.'); return; }
+      const r = upgradeRoundIfNeeded(jparse(raw,null)); if(!r){ alert('Invalid round data.'); return; }
 
-const rows = [[
-  'Hole','Par','TargetScore','ToSZ','SZtoG','Putts','Gross',
-  'TeeClub','TeeResult','TeeDirection',
-  'OB','Penalty','Bunker','Topped','HeavyDuff','Shank',
-  'vsTarget','vsPar','GIRLabel','Memo' // 🆕 ← 追加
-]];
+      const rows = [[
+        'Hole','Par','TargetScore','ToSZ','SZtoG','Putts','Gross',
+        'TeeClub','TeeResult','TeeDirection',
+        // split other
+        'ToSZ_OB','ToSZ_Penalty','ToSZ_Bunker','ToSZ_Topped','ToSZ_HeavyDuff','ToSZ_Shank',
+        'SZtoG_OB','SZtoG_Penalty','SZtoG_Bunker','SZtoG_Topped','SZtoG_HeavyDuff','SZtoG_Shank',
+        'vsTarget','vsPar','GIRLabel','Memo'
+      ]];
 
       r.playOrder.forEach(no=>{
         const h = r.holes[no-1];
@@ -959,19 +1055,20 @@ const rows = [[
           else if(strokesToGreen <= h.par-1) girLabel = 'GIR+1';
         }
 
-  rows.push([
-  no, h.par, targetScore,
-  (h.strokesToSZ||0),
-  (h.strokesFromSZ||0),
-  (h.putts||0),
-  gross,
-  h.teeClub, h.teeResult, h.teeDirection,
-  (h.ob||0),(h.penalty||0),
-  (h.bunker||0),(h.topped||0),(h.heavyDuff||0),(h.shank||0),
-  (gross-targetScore),(gross-h.par),
-  girLabel,
-  h.memo || '' // 🆕 ← 追加
-]);
+        rows.push([
+          no, h.par, targetScore,
+          (h.strokesToSZ||0),
+          (h.strokesFromSZ||0),
+          (h.putts||0),
+          gross,
+          h.teeClub, h.teeResult, h.teeDirection,
+          // split other
+          (h.toSZ.ob||0),(h.toSZ.penalty||0),(h.toSZ.bunker||0),(h.toSZ.topped||0),(h.toSZ.heavyDuff||0),(h.toSZ.shank||0),
+          (h.szToG.ob||0),(h.szToG.penalty||0),(h.szToG.bunker||0),(h.szToG.topped||0),(h.szToG.heavyDuff||0),(h.szToG.shank||0),
+          (gross-targetScore),(gross-h.par),
+          girLabel,
+          h.memo || ''
+        ]);
       });
 
       const csv = rows.map(r=>r.map(x=>String(x).replace(/"/g,'""')).map(x=>`"${x}"`).join(',')).join('\n');
@@ -1006,7 +1103,7 @@ const rows = [[
       document.querySelectorAll('.tee-res-opt').forEach(l=> l.addEventListener('click', ()=> updateHole('teeResult', l.dataset.value)));
       document.querySelectorAll('.tee-dir-opt').forEach(l=> l.addEventListener('click', ()=> updateHole('teeDirection', l.dataset.value)));
 
-      // +/- counters (To SZ, SZ to G, Putts, Result override, Other)
+      // +/- counters (To SZ, SZ to G, Putts, Result override, Other-split)
       document.querySelectorAll('[data-key][data-act]').forEach(b=> b.addEventListener('click', ()=> inc(b.dataset.key, b.dataset.act==='+'?1:-1)));
 
       // Target toggle
